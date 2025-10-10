@@ -1,0 +1,155 @@
+{
+  "name": "My workflow 3",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "FEEDBACK ABOUT AGENTIC AI",
+        "formDescription": "Fill this form about your thoughts and what you have learnt about agentic AI.we will reach you via email to finalise your thoughts and submit them",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Email Address",
+              "fieldType": "email",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "The date you attended the Session",
+              "fieldType": "date"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.3,
+      "position": [
+        0,
+        0
+      ],
+      "id": "923d9fe7-2b1b-477b-b902-bb39ccd89aeb",
+      "name": "On form submission",
+      "webhookId": "94fdb7ec-8241-4ace-b429-c6b8d6f54794"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "07b312bd-7119-4076-b198-0607600a2af3",
+              "leftValue": "={{ $json['The date you attended the Session'].toDateTime() }}",
+              "rightValue": "={{ $now.plus(7,'days') }}",
+              "operator": {
+                "type": "dateTime",
+                "operation": "beforeOrEquals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        208,
+        0
+      ],
+      "id": "6578e000-61da-423b-a86c-a1f08550c3b5",
+      "name": "is within 7 days?"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        464,
+        128
+      ],
+      "id": "6eec82eb-73fc-4dfd-9948-0241f392d1fe",
+      "name": "TO-DO"
+    },
+    {
+      "parameters": {
+        "sendTo": "sushanthreddy2007@gmail.com",
+        "subject": "thoughts on AGENTIC AI",
+        "message": "=Ai thoughts for whom submitted within 7 days.Ur are being selected {{ $json.formMode }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        416,
+        -96
+      ],
+      "id": "f8a684d9-3a0b-4449-80e7-f53d592d3e53",
+      "name": "Send a message",
+      "webhookId": "51f4b3f4-ea89-426e-9c5f-bb6a9d5b90bd",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "051VYrJXCubMjvE5",
+          "name": "Gmail account 4"
+        }
+      }
+    }
+  ],
+  "pinData": {
+    "On form submission": [
+      {
+        "json": {
+          "Email Address": "gsrww@gmail.com",
+          "The date you attended the Session": "2025-10-04",
+          "submittedAt": "2025-10-10T11:17:53.889-04:00",
+          "formMode": "test"
+        }
+      }
+    ]
+  },
+  "connections": {
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "is within 7 days?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "is within 7 days?": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "TO-DO",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "940a3e92-b4b4-4239-9d4b-704313cee166",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "87ab1e091c9d7cbb90c81bbb3ecc2d27859400f2d47a6c666c8cf01c8c01bbd9"
+  },
+  "id": "D0ofcQh62sRNS0yC",
+  "tags": []
+}
